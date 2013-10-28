@@ -1,0 +1,37 @@
+<h1><%= current_user.name %> &#8217; todos</h1>
+
+<table class="mytable">
+  <tr class="myrow">
+		<th>priority</th>
+    <th>Title</th>
+    <th>Desc</th>
+    <th>Due date</th>
+    <th>Done</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @todos.each do |todo| %>
+  <tr class="myrow">
+		<td class="mytd"><%= todo.important %></td>
+    <td class="mytd"><%= todo.title %></td>
+    <td class="mytd"><%= todo.desc %></td>
+    <td class="mytd"><%= todo.dued %></td>
+    <td class="mytd"><%= todo_done(todo.done)  %></td>
+    <td><%= link_to 'Show', todo, class: "btn btn-large btn-primary"%></td>
+    <td><%= link_to 'Edit', edit_todo_path(todo), class: "btn btn-large btn-primary" %></td>
+    <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-large btn-primary" %></td>
+		<% if todo.important != 1 %>
+			<td><%= link_to 'Move up', move_up_todo_path(todo), class: "btn btn-large btn-primary" %></td>
+		<% end %>
+		<% if todo.important!=current_user.todos.count %>
+			<td><%= link_to 'Move down', move_down_todo_path(todo), class: "btn btn-large btn-primary" %></td>
+		<% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Todo', new_todo_path, class: "btn btn-large btn-primary" %>

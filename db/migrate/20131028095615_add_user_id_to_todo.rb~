@@ -1,0 +1,4 @@
+class AddUserIdToTodo < ActiveRecord::Migration
+  def change
+  end
+end
