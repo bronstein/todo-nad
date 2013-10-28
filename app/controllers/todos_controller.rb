@@ -49,6 +49,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if @todo.save
+				sign_in @user
         format.html { redirect_to current_user, notice: 'Todo was successfully created.' }
         format.json { render json: @todo, status: :created, location: @todo }
       else
@@ -90,7 +91,7 @@ class TodosController < ApplicationController
 		@todo = Todo.find(params[:id])
 		current_level = @todo.important
 		next_level = current_level==1 ? 1 : current_level-1
-		@todo_neighbor = Todo.where(important: next_level).first
+		@todo_neighbor = current_user.todos.where(important: next_level).first
 		@todo.update_attributes(:important => -1)
 		@todo_neighbor.update_attributes(:important => current_level)
 		@todo.update_attributes(:important => next_level)

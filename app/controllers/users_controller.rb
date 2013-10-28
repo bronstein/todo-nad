@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	
-	before_filter :signed_in_user
-	before_filter :correct_user
+	before_filter :signed_in_user, :except => [:index, :new, :create]
+	before_filter :correct_user, :except => [:index, :new, :create]
   # GET /users
   # GET /users.json
   def index
@@ -23,7 +23,6 @@ class UsersController < ApplicationController
     	  format.html # show.html.erb
     	  format.json { render json: @user }
    		end
-		
   end
 
   # GET /users/new
@@ -47,11 +46,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 		if @user.save
-			flash[:success] = "Welcome to the Sample App!"
-	    respond_to do |format|
-     		format.html { redirect_to @user, notice: 'User was successfully created.' }
-       	format.json { render json: @user, status: :created, location: @user }
-			end
+			sign_in @user
+			flash[:success] = "Welcome #{ @user.name }!"
+			redirect_to @user
  	  else
 			respond_to do |format|
   	    format.html { render action: "new" }
@@ -92,16 +89,7 @@ class UsersController < ApplicationController
 
 		def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
-
-		def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
-    end
-
-		def admin_user
-      redirect_to(root_url) unless current_user.admin?
+      redirect_to (signin_path) unless current_user?(@user)
     end
 
 end

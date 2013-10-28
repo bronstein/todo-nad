@@ -90,7 +90,7 @@ class TodosController < ApplicationController
 		@todo = Todo.find(params[:id])
 		current_level = @todo.important
 		next_level = current_level==1 ? 1 : current_level-1
-		@todo_neighbor = Todo.where(important: next_level).first
+		@todo_neighbor = current_user.todos.where(important: next_level).first
 		@todo.update_attributes(:important => -1)
 		@todo_neighbor.update_attributes(:important => current_level)
 		@todo.update_attributes(:important => next_level)
@@ -100,7 +100,7 @@ class TodosController < ApplicationController
 	def move_down
 		@todo = Todo.find(params[:id])
 		current_level = @todo.important
-		next_level = current_level==1 ? 1 : current_level+1
+		next_level = current_level+1
 		@todo_neighbor = Todo.where(important: next_level).first
 		@todo.update_attributes(:important => -1)
 		@todo_neighbor.update_attributes(:important => current_level)

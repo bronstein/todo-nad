@@ -304,11 +304,10 @@ input.btn-primary{display:block;}
 	
 	.myrow{
 		.mytd{
+			width:90px;
 			font-size:18px;
 			a{width:90px;}
-		{
-	}
-	
-
+		}
+	}	
 }
 
