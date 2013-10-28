@@ -2,7 +2,7 @@
 
 <table class="mytable">
   <tr class="myrow">
-		<th>priority</th>
+		<th>Priority</th>
     <th>Title</th>
     <th>Desc</th>
     <th>Due date</th>
@@ -21,7 +21,7 @@
     <td class="mytd"><%= todo_done(todo.done)  %></td>
     <td><%= link_to 'Show', todo, class: "btn btn-large btn-primary"%></td>
     <td><%= link_to 'Edit', edit_todo_path(todo), class: "btn btn-large btn-primary" %></td>
-    <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-large btn-primary" %></td>
+    <td><%= link_to 'Delete', todo, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-large btn-primary" %></td>
 		<% if todo.important != 1 %>
 			<td><%= link_to 'Move up', move_up_todo_path(todo), class: "btn btn-large btn-primary" %></td>
 		<% end %>
